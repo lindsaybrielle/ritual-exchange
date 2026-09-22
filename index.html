@@ -11,25 +11,24 @@
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,450;0,9..144,600;1,9..144,500&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
 <style>
   :root{
     color-scheme: light dark;
-    --ink:#172A3A; --ink-soft:#4C5C6C;
+    --ink:#172A3A; --ink-soft:#5B6B7A;
     --paper:#EDEEE4; --surface:#F9F9F2; --surface-raise:#FFFFFE;
-    --line:#C9CBBC; --line-strong:#A8ABA0;
+    --line:#D6D8CB; --line-strong:#B7BAAD;
     --ritual:#7C2F2C; --ritual-tint:#F3E1DA; --ritual-tint-line:#DEBCB0;
     --process:#1E5E73; --process-tint:#DDEBEE; --process-tint-line:#B7D3D9;
     --stamp:#B9700F; --stamp-tint:#F6E6CC;
     --focus:#F7C13B;
     --good:#2E6B3E; --bad:#A23B2E;
-    --font-display:'Fraunces', Georgia, 'Iowan Old Style', serif;
-    --font-body:'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+    --font-display:'Fredoka', 'Baloo 2', system-ui, sans-serif;
+    --font-body:'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   @media (prefers-color-scheme: dark){
     :root{
-      --ink:#EAE8DC; --ink-soft:#AEB4A9;
+      --ink:#EAE8DC; --ink-soft:#B7BDAE;
       --paper:#111A22; --surface:#182229; --surface-raise:#1E2A32;
       --line:#31404A; --line-strong:#455563;
       --ritual:#E4917C; --ritual-tint:#2C201D; --ritual-tint-line:#4A342C;
@@ -40,12 +39,13 @@
   }
 
   *{box-sizing:border-box;}
+  [hidden]{ display:none !important; }
   html, body{ height:auto; }
   body{
     background:var(--paper); color:var(--ink);
     font-family:var(--font-body);
     margin:0;
-    padding:24px 16px 48px;
+    padding:44px clamp(20px, 5vw, 56px) 72px;
     -webkit-font-smoothing:antialiased;
   }
   ::selection{ background:var(--focus); color:#1A1200; }
@@ -57,46 +57,52 @@
     *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
   }
 
-  .page{ max-width:1180px; margin:0 auto; }
+  .label-text{
+    font-family:var(--font-body); font-weight:800; font-size:11.5px; letter-spacing:.08em; text-transform:uppercase;
+  }
+
+  .page{ max-width:1260px; margin:0 auto; }
 
   header.masthead{
-    display:flex; justify-content:space-between; align-items:flex-end; gap:24px;
+    display:flex; justify-content:space-between; align-items:flex-end; gap:28px;
     flex-wrap:wrap;
     border-bottom:2px solid var(--ink);
-    padding-bottom:16px; margin-bottom:28px;
+    padding-bottom:26px; margin-bottom:48px;
   }
   .masthead-title .eyebrow{
-    font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
-    color:var(--ink-soft); display:block; margin-bottom:8px;
+    font-family:var(--font-body); font-weight:800; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--stamp); display:block; margin-bottom:12px;
   }
+  .brand-row{ display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+  .brand-row img{ width:42px; height:42px; flex:none; }
   .masthead-title h1{
-    font-family:var(--font-display); font-weight:600; font-size:clamp(28px,4vw,42px);
-    margin:0 0 8px; text-wrap:balance; line-height:1.02;
+    font-family:var(--font-display); font-weight:600; font-size:clamp(30px,4vw,44px);
+    margin:0; text-wrap:balance; line-height:1;
   }
   .masthead-title p{
-    margin:0; max-width:52ch; color:var(--ink-soft); font-size:15px; line-height:1.5;
+    margin:0; max-width:50ch; color:var(--ink-soft); font-size:15.5px; line-height:1.6;
   }
   .masthead-meta{
-    font-family:var(--font-mono); font-size:12px; color:var(--ink-soft);
+    font-family:var(--font-body); font-weight:700; font-size:12.5px; color:var(--ink-soft);
     text-align:right; white-space:nowrap;
   }
-  .masthead-meta .count{ color:var(--ink); font-size:20px; font-weight:500; display:block; }
+  .masthead-meta .count{ color:var(--ink); font-family:var(--font-display); font-size:24px; font-weight:600; display:block; }
 
   .desk{
-    display:grid; grid-template-columns: 250px 1fr 250px;
-    gap:20px; align-items:start;
+    display:grid; grid-template-columns: 260px 1fr 260px;
+    gap:56px; align-items:start;
   }
   @media (max-width: 900px){
-    .desk{ grid-template-columns: 1fr; }
+    .desk{ grid-template-columns: 1fr; gap:36px; }
     .stack-col.process-col{ order:3; }
     .directive-col{ order:2; }
     .stack-col.ritual-col{ order:1; }
   }
 
-  .stack-col{ display:flex; flex-direction:column; gap:10px; position:sticky; top:16px; }
+  .stack-col{ display:flex; flex-direction:column; gap:14px; position:sticky; top:20px; }
   @media (max-width: 900px){ .stack-col{ position:static; } }
   .stack-label{
-    font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    font-family:var(--font-body); font-weight:800; font-size:12px; letter-spacing:.08em; text-transform:uppercase;
     display:flex; align-items:center; gap:8px;
   }
   .stack-label .dot{ width:8px; height:8px; border-radius:50%; flex:none; }
@@ -107,7 +113,7 @@
 
   .stack-wrap{ position:relative; padding:0 6px; }
   .deco{
-    position:absolute; inset:0; border-radius:10px; border:1px solid var(--line);
+    position:absolute; inset:0; border-radius:22px; border:1px solid var(--line);
     background:var(--surface);
   }
   .deco-1{ transform:rotate(-2.5deg) translateY(2px); z-index:1; }
@@ -117,53 +123,53 @@
     position:relative; z-index:2;
     background:var(--surface-raise);
     border:1px solid var(--line-strong);
-    border-radius:10px;
-    padding:16px 16px 14px;
+    border-radius:22px;
+    padding:22px 20px;
     box-shadow:0 2px 0 rgba(0,0,0,0.04);
     min-height:150px;
-    display:flex; flex-direction:column; gap:8px;
+    display:flex; flex-direction:column; gap:10px;
   }
   .card .badge-row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
   .card .badge{
-    font-family:var(--font-mono); font-size:10.5px; color:var(--ink-soft);
-    border:1px solid var(--line); border-radius:100px; padding:2px 9px;
+    font-family:var(--font-body); font-weight:700; font-size:10.5px; color:var(--ink-soft);
+    border:1px solid var(--line); border-radius:100px; padding:3px 10px;
   }
-  .card .addedby{ font-family:var(--font-mono); font-size:10.5px; color:var(--ink-soft); font-style:italic; }
+  .card .addedby{ font-size:11px; color:var(--ink-soft); font-style:italic; }
   .card h3{
-    font-family:var(--font-display); font-size:20px; font-weight:600; margin:0; line-height:1.15;
+    font-family:var(--font-display); font-size:21px; font-weight:600; margin:0; line-height:1.2;
     text-wrap:balance;
   }
   .ritual-col .card h3{ color:var(--ritual); }
   .process-col .card h3{ color:var(--process); }
-  .card .blurb{ font-size:13.5px; line-height:1.5; color:var(--ink-soft); margin:0; }
+  .card .blurb{ font-size:14px; line-height:1.55; color:var(--ink-soft); margin:0; }
 
   .side-btn{
     align-self:stretch; text-align:center;
     background:none; border:1px solid var(--line-strong); color:var(--ink);
-    font-size:13px; font-weight:500; padding:9px 12px; border-radius:8px; cursor:pointer;
+    font-size:13.5px; font-weight:700; padding:10px 12px; border-radius:16px; cursor:pointer;
     display:inline-flex; align-items:center; justify-content:center; gap:6px;
   }
   .side-btn:hover{ border-color:var(--ink); }
   .side-btn svg{ width:12px; height:12px; flex:none; }
-  .side-btn.ghost{ border-style:dashed; color:var(--ink-soft); font-size:12.5px; }
+  .side-btn.ghost{ border-style:dashed; color:var(--ink-soft); font-size:13px; }
 
   .add-form{
-    display:flex; flex-direction:column; gap:8px;
-    background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:10px;
+    display:flex; flex-direction:column; gap:10px;
+    background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:16px;
   }
   .add-form input{
-    background:var(--surface-raise); border:1px solid var(--line-strong); border-radius:6px;
-    padding:8px 10px; font-size:13px; color:var(--ink); font-family:inherit; width:100%;
+    background:var(--surface-raise); border:1px solid var(--line-strong); border-radius:12px;
+    padding:9px 12px; font-size:13.5px; color:var(--ink); font-family:inherit; width:100%;
   }
   .add-actions{ display:flex; gap:8px; }
-  .btn-primary.small, .btn-secondary.small{ padding:7px 12px; font-size:12.5px; flex:1; }
+  .btn-primary.small, .btn-secondary.small{ padding:8px 12px; font-size:13px; flex:1; }
 
-  .directive-col{ display:flex; flex-direction:column; gap:16px; align-items:stretch; }
+  .directive-col{ display:flex; flex-direction:column; gap:22px; align-items:stretch; }
 
   .draw-btn{
     background:var(--stamp); color:#241802; border:none;
-    font-family:var(--font-display); font-weight:600; font-size:17px;
-    padding:15px 20px; border-radius:10px; cursor:pointer;
+    font-family:var(--font-display); font-weight:600; font-size:18px;
+    padding:17px 22px; border-radius:20px; cursor:pointer;
     display:flex; align-items:center; justify-content:center; gap:10px;
     box-shadow:0 3px 0 rgba(0,0,0,0.18);
     transition:transform .1s ease, box-shadow .1s ease;
@@ -172,16 +178,16 @@
   .draw-btn:active{ transform:translateY(1px); box-shadow:0 1px 0 rgba(0,0,0,0.18); }
 
   .combo{
-    background:var(--surface); border:1px solid var(--line-strong); border-radius:12px;
-    padding:20px;
+    background:var(--surface); border:1px solid var(--line-strong); border-radius:26px;
+    padding:28px 26px;
   }
   .combo-label{
-    font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.1em;
-    color:var(--ink-soft); margin-bottom:10px;
+    font-family:var(--font-body); font-weight:800; font-size:11.5px; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--ink-soft); margin-bottom:14px;
   }
   .link-row{
-    display:flex; align-items:center; gap:14px; margin-bottom:4px;
-    font-family:var(--font-display); font-size:clamp(19px,2.8vw,25px); font-weight:600;
+    display:flex; align-items:center; gap:14px; margin-bottom:6px;
+    font-family:var(--font-display); font-size:clamp(20px,2.8vw,26px); font-weight:600;
     text-wrap:balance;
   }
   .link-row .r{ color:var(--ritual); }
@@ -194,70 +200,77 @@
     .link-row .arrow{ transform:rotate(90deg); margin:1px 0; }
   }
 
+  .borrow-heading{
+    font-family:var(--font-body); font-weight:800; font-size:12px; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--ritual); margin:22px 0 10px; display:flex; align-items:center; gap:6px;
+  }
   .borrow-list{
-    margin:16px 0 0; padding:0; list-style:none;
-    display:flex; flex-direction:column; gap:7px;
+    margin:0; padding:0; list-style:none;
+    display:flex; flex-direction:column; gap:8px;
   }
   .borrow-list li{
     background:var(--ritual-tint); border:1px solid var(--ritual-tint-line);
-    color:var(--ink); border-radius:7px; padding:9px 11px; font-size:13px; line-height:1.45;
+    color:var(--ink); border-radius:14px; padding:11px 14px; font-size:13.5px; line-height:1.5;
   }
 
-  .note-field{ margin-top:18px; }
+  .note-field{ margin-top:26px; }
   .note-field label{
-    display:block; font-family:var(--font-mono); font-size:11px; text-transform:uppercase;
-    letter-spacing:.1em; color:var(--ink-soft); margin-bottom:6px;
+    display:block; font-family:var(--font-body); font-weight:800; font-size:11.5px; text-transform:uppercase;
+    letter-spacing:.08em; color:var(--ink-soft); margin-bottom:8px;
   }
   .note-field textarea{
-    width:100%; min-height:78px; resize:vertical;
-    background:var(--surface-raise); border:1px solid var(--line-strong); border-radius:8px;
-    padding:10px 12px; font-family:var(--font-body); font-size:14px; color:var(--ink);
-    line-height:1.5;
+    width:100%; min-height:82px; resize:vertical;
+    background:var(--surface-raise); border:1px solid var(--line-strong); border-radius:16px;
+    padding:12px 14px; font-family:var(--font-body); font-size:14.5px; color:var(--ink);
+    line-height:1.55;
   }
-  .name-row{ margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; }
+  .name-row{ margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; }
   .name-row input{
     flex:1; min-width:180px;
-    background:var(--surface-raise); border:1px solid var(--line-strong); border-radius:8px;
-    padding:9px 12px; font-family:var(--font-body); font-size:13.5px; color:var(--ink);
+    background:var(--surface-raise); border:1px solid var(--line-strong); border-radius:16px;
+    padding:10px 14px; font-family:var(--font-body); font-size:14px; color:var(--ink);
   }
-  .action-row{ margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; }
+  .action-row{ margin-top:16px; display:flex; gap:10px; flex-wrap:wrap; }
   .btn-primary, .btn-secondary{
-    border-radius:8px; padding:10px 16px; font-size:13.5px; font-weight:600; cursor:pointer;
+    border-radius:16px; padding:11px 18px; font-size:14px; font-weight:700; cursor:pointer;
   }
   .btn-primary{ background:var(--process); color:var(--surface-raise); border:none; }
   .btn-secondary{ background:none; border:1px solid var(--line-strong); color:var(--ink); }
   .btn-primary:disabled{ opacity:.5; cursor:not-allowed; }
-  .status-line{ font-size:12px; margin-top:8px; min-height:15px; font-family:var(--font-mono); }
+  .status-line{ font-size:12.5px; margin-top:10px; min-height:16px; font-family:var(--font-body); font-weight:600; }
   .status-line.ok{ color:var(--good); }
   .status-line.err{ color:var(--bad); }
   .status-line.muted{ color:var(--ink-soft); }
 
-  .board{ margin-top:4px; }
+  .board{ margin-top:6px; }
   .board-head{
     display:flex; justify-content:space-between; align-items:baseline;
-    border-bottom:1px solid var(--line-strong); padding-bottom:6px; margin-bottom:10px;
+    border-bottom:1px solid var(--line-strong); padding-bottom:8px; margin-bottom:14px;
   }
   .board-head h2{
-    font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.1em;
+    font-family:var(--font-body); font-weight:800; font-size:11.5px; text-transform:uppercase; letter-spacing:.08em;
     margin:0; color:var(--ink-soft);
   }
   .board-list{
-    list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px;
+    list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px;
     max-height:320px; overflow-y:auto;
   }
   .board-item{
-    border:1px solid var(--line); border-radius:8px; padding:10px 12px; background:var(--surface);
+    border:1px solid var(--line); border-radius:16px; padding:12px 14px; background:var(--surface);
   }
-  .board-item .pair{ font-size:12.5px; font-weight:600; margin-bottom:3px; }
+  .board-item .pair{ font-size:13px; font-weight:700; margin-bottom:4px; }
   .board-item .pair .r{ color:var(--ritual); }
   .board-item .pair .p{ color:var(--process); }
-  .board-item .idea{ font-size:13px; line-height:1.45; margin:0 0 4px; }
-  .board-item .who{ font-family:var(--font-mono); font-size:10.5px; color:var(--ink-soft); }
-  .board-empty, .board-note{ padding:12px; color:var(--ink-soft); font-size:12.5px; font-style:italic; border:1px dashed var(--line); border-radius:8px; }
+  .board-item .idea{ font-size:13.5px; line-height:1.5; margin:0 0 5px; }
+  .board-item .who{ font-size:11px; color:var(--ink-soft); font-weight:600; }
+  .board-empty, .board-note{ padding:14px; color:var(--ink-soft); font-size:13px; font-style:italic; border:1px dashed var(--line); border-radius:16px; }
 
   footer.note{
-    margin-top:28px; font-size:12px; color:var(--ink-soft); max-width:70ch; line-height:1.6;
+    margin-top:48px; padding-top:24px; border-top:1px solid var(--line);
+    color:var(--ink-soft); max-width:62ch;
   }
+  footer.note p{ font-size:12.5px; line-height:1.65; margin:0 0 8px; }
+  footer.note .source{ font-size:12px; }
   footer.note a{ color:inherit; }
 </style>
 </head>
@@ -265,8 +278,11 @@
 <div class="page">
   <header class="masthead">
     <div class="masthead-title">
-      <span class="eyebrow">Steal a ritual, fix a meeting.</span>
-      <h1>Ritual Exchange</h1>
+      <span class="eyebrow">🔥 Steal a ritual, fix a meeting.</span>
+      <div class="brand-row">
+        <img src="favicon.svg" alt="" width="42" height="42">
+        <h1>Ritual Exchange</h1>
+      </div>
       <p>Draw a random ritual and a random work process. Take one thing worth borrowing from the ritual, and sketch how it would actually work in the process.</p>
     </div>
     <div class="masthead-meta">
@@ -277,7 +293,7 @@
 
   <main class="desk">
     <section class="stack-col ritual-col" aria-label="Ritual pile">
-      <div class="stack-label"><span class="dot" aria-hidden="true"></span> Rituals</div>
+      <div class="stack-label"><span class="dot" aria-hidden="true"></span> 🕯️ Rituals</div>
       <div class="stack-wrap">
         <div class="deco deco-2" aria-hidden="true"></div>
         <div class="deco deco-1" aria-hidden="true"></div>
@@ -294,7 +310,7 @@
         <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10.2-4.3M14 8a6 6 0 0 1-10.2 4.3M11 2v3h-3M5 14v-3h3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Draw new ritual
       </button>
-      <button class="side-btn ghost" id="toggleAddRitual" type="button">+ Add a ritual</button>
+      <button class="side-btn ghost" id="toggleAddRitual" type="button">➕ Add a ritual</button>
       <div class="add-form" id="addRitualForm" hidden>
         <input id="newRitualTitle" type="text" placeholder="Ritual name" maxlength="80">
         <input id="newRitualBlurb" type="text" placeholder="One line describing it (optional)" maxlength="160">
@@ -308,16 +324,17 @@
     </section>
 
     <section class="directive-col" aria-label="Combination and submission">
-      <button class="draw-btn" id="drawBtn" type="button">Draw a combination</button>
+      <button class="draw-btn" id="drawBtn" type="button">🎲 Draw a combination</button>
 
       <div class="combo">
-        <div class="combo-label">Your combination</div>
+        <div class="combo-label">✨ Your combination</div>
         <div class="link-row">
           <span class="r" id="linkRitual">&nbsp;</span>
           <span class="arrow" aria-hidden="true">&rarr;</span>
           <span class="p" id="linkProcess">&nbsp;</span>
         </div>
 
+        <div class="borrow-heading">💡 Worth borrowing</div>
         <ul class="borrow-list" id="borrowList" aria-label="Ways in from the ritual"></ul>
 
         <div class="note-field">
@@ -328,7 +345,7 @@
           </div>
           <div class="action-row">
             <button class="btn-primary" id="submitBtn" type="button">Add to the board</button>
-            <button class="btn-secondary" id="copyBtn" type="button">Copy my answer</button>
+            <button class="btn-secondary" id="copyBtn" type="button">📋 Copy my answer</button>
           </div>
           <div class="status-line muted" id="statusLine">Submitting adds it to the board below &mdash; or just note it down and share it your own way.</div>
         </div>
@@ -336,7 +353,7 @@
 
       <div class="board" id="boardSection">
         <div class="board-head">
-          <h2>Shared board</h2>
+          <h2>💬 Shared board</h2>
           <span class="status-line muted" id="boardCount" style="margin:0;"></span>
         </div>
         <ul class="board-list" id="boardList">
@@ -346,7 +363,7 @@
     </section>
 
     <section class="stack-col process-col" aria-label="Process pile">
-      <div class="stack-label"><span class="dot" aria-hidden="true"></span> Processes</div>
+      <div class="stack-label"><span class="dot" aria-hidden="true"></span> 🗂️ Processes</div>
       <div class="stack-wrap">
         <div class="deco deco-2" aria-hidden="true"></div>
         <div class="deco deco-1" aria-hidden="true"></div>
@@ -363,7 +380,7 @@
         <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10.2-4.3M14 8a6 6 0 0 1-10.2 4.3M11 2v3h-3M5 14v-3h3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Draw new process
       </button>
-      <button class="side-btn ghost" id="toggleAddProcess" type="button">+ Add a work process</button>
+      <button class="side-btn ghost" id="toggleAddProcess" type="button">➕ Add a work process</button>
       <div class="add-form" id="addProcessForm" hidden>
         <input id="newProcessTitle" type="text" placeholder="Process name" maxlength="80">
         <input id="newProcessBlurb" type="text" placeholder="One line describing it (optional)" maxlength="160">
@@ -376,7 +393,10 @@
     </section>
   </main>
 
-  <footer class="note">Anyone can use this site without an account. Your name and answer are only shown on the shared board above, for whoever is running this exercise. Rituals and processes you add join the shared pool for everyone. If the shared board can't be reached (offline, or a privacy extension blocking it), use &ldquo;Copy my answer&rdquo; instead, and anything you add is saved to your own browser only until it's back. Source: <a href="https://github.com/lindsaybrielle/ritual-exchange" target="_blank" rel="noopener">github.com/lindsaybrielle/ritual-exchange</a>.</footer>
+  <footer class="note">
+    <p>No account needed. Answers and new entries join the shared board for everyone. If it's ever unreachable, use &ldquo;Copy my answer&rdquo; instead &mdash; nothing's lost, it just stays on your device until it's back.</p>
+    <p class="source">🔧 <a href="https://github.com/lindsaybrielle/ritual-exchange" target="_blank" rel="noopener">View the source</a></p>
+  </footer>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
