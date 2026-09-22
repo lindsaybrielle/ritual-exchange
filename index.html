@@ -11,7 +11,7 @@
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap">
 <style>
   :root{
     color-scheme: light dark;
@@ -21,9 +21,11 @@
     --ritual:#7C2F2C; --ritual-tint:#F3E1DA; --ritual-tint-line:#DEBCB0;
     --process:#1E5E73; --process-tint:#DDEBEE; --process-tint-line:#B7D3D9;
     --stamp:#B9700F; --stamp-tint:#F6E6CC;
+    --ball-green:#3F8F5F; --ball-berry:#C23B6B; --ball-sky:#3E86C9; --ball-violet:#7A5FC9;
+    --balls-bg:#F5E1D3;
     --focus:#F7C13B;
     --good:#2E6B3E; --bad:#A23B2E;
-    --font-display:'Fredoka', 'Baloo 2', system-ui, sans-serif;
+    --font-display:'Unbounded', 'Baloo 2', system-ui, sans-serif;
     --font-body:'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   @media (prefers-color-scheme: dark){
@@ -34,6 +36,8 @@
       --ritual:#E4917C; --ritual-tint:#2C201D; --ritual-tint-line:#4A342C;
       --process:#7FCBDD; --process-tint:#132C33; --process-tint-line:#20444E;
       --stamp:#EFAC50; --stamp-tint:#2E2210;
+      --ball-green:#5FBE86; --ball-berry:#E0678F; --ball-sky:#6FB2E8; --ball-violet:#A38EE8;
+      --balls-bg:#241A14;
       --focus:#F7C13B; --good:#79C68C; --bad:#E38A78;
     }
   }
@@ -50,43 +54,77 @@
   }
   ::selection{ background:var(--focus); color:#1A1200; }
   button{ font-family:inherit; }
-  button:focus-visible, textarea:focus-visible, input:focus-visible, [tabindex]:focus-visible{
+  button:focus-visible, textarea:focus-visible, input:focus-visible, a:focus-visible, [tabindex]:focus-visible{
     outline:3px solid var(--focus); outline-offset:2px;
   }
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
   }
 
-  .label-text{
-    font-family:var(--font-body); font-weight:800; font-size:11.5px; letter-spacing:.08em; text-transform:uppercase;
-  }
-
   .page{ max-width:1260px; margin:0 auto; }
 
-  header.masthead{
-    display:flex; justify-content:space-between; align-items:flex-end; gap:28px;
-    flex-wrap:wrap;
-    border-bottom:2px solid var(--ink);
-    padding-bottom:26px; margin-bottom:48px;
+  /* ---------- hero ---------- */
+  .hero{
+    display:grid; grid-template-columns: 1fr 1fr; gap:44px; align-items:stretch;
+    margin-bottom:56px;
   }
-  .masthead-title .eyebrow{
+  @media (max-width:900px){ .hero{ grid-template-columns:1fr; gap:26px; } }
+
+  .hero-info{ display:flex; flex-direction:column; justify-content:center; }
+  .eyebrow{
     font-family:var(--font-body); font-weight:800; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase;
-    color:var(--stamp); display:block; margin-bottom:12px;
+    color:var(--stamp); display:block; margin-bottom:14px;
   }
-  .brand-row{ display:flex; align-items:center; gap:12px; margin-bottom:12px; }
-  .brand-row img{ width:42px; height:42px; flex:none; }
-  .masthead-title h1{
-    font-family:var(--font-display); font-weight:600; font-size:clamp(30px,4vw,44px);
-    margin:0; text-wrap:balance; line-height:1;
+  .brand-row{ display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+  .brand-row img{ width:40px; height:40px; flex:none; }
+  .hero h1{
+    font-family:var(--font-display); font-weight:700; font-size:clamp(24px,3.6vw,36px);
+    margin:0; text-wrap:balance; line-height:1.05; letter-spacing:-.01em;
   }
-  .masthead-title p{
-    margin:0; max-width:50ch; color:var(--ink-soft); font-size:15.5px; line-height:1.6;
+  .hero-nav{ display:flex; gap:20px; flex-wrap:wrap; margin-bottom:18px; }
+  .hero-nav a{
+    font-family:var(--font-display); font-weight:600; font-size:11.5px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--ink); text-decoration:none; border-bottom:2px solid transparent; padding-bottom:2px;
   }
-  .masthead-meta{
-    font-family:var(--font-body); font-weight:700; font-size:12.5px; color:var(--ink-soft);
-    text-align:right; white-space:nowrap;
+  .hero-nav a:hover{ border-bottom-color:var(--stamp); }
+  .hero-rule{ border:none; border-top:2px dotted var(--line-strong); margin:0 0 22px; }
+  .hero-info p{
+    margin:0; max-width:48ch; color:var(--ink-soft); font-size:15.5px; line-height:1.65;
   }
-  .masthead-meta .count{ color:var(--ink); font-family:var(--font-display); font-size:24px; font-weight:600; display:block; }
+  .hero-meta{
+    margin-top:24px; font-family:var(--font-body); font-weight:800; font-size:11.5px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--ink-soft);
+  }
+  .hero-meta .count{
+    display:block; font-family:var(--font-display); font-weight:700; font-size:26px; letter-spacing:0;
+    text-transform:none; color:var(--ink); margin-top:2px;
+  }
+
+  .hero-balls{
+    position:relative; border-radius:32px; overflow:hidden; min-height:380px;
+    background:var(--balls-bg);
+  }
+  @media (max-width:900px){ .hero-balls{ min-height:220px; } }
+  .ball{
+    position:absolute; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 18px rgba(0,0,0,.16);
+    animation-name:ball-float; animation-timing-function:ease-in-out; animation-iteration-count:infinite;
+    line-height:1;
+  }
+  @keyframes ball-float{
+    0%, 100%{ transform:translateY(0) rotate(0deg); }
+    50%{ transform:translateY(-16px) rotate(3deg); }
+  }
+
+  /* ---------- avatars ---------- */
+  .avatar{
+    display:inline-flex; align-items:center; justify-content:center; flex:none;
+    width:38px; height:38px; border-radius:50%; font-size:19px;
+    box-shadow:0 2px 0 rgba(0,0,0,.08);
+  }
+  .avatar-inline{ width:28px; height:28px; font-size:15px; margin-right:8px; }
+  .title-row{ display:flex; align-items:center; gap:10px; }
 
   .desk{
     display:grid; grid-template-columns: 260px 1fr 260px;
@@ -136,7 +174,7 @@
   }
   .card .addedby{ font-size:11px; color:var(--ink-soft); font-style:italic; }
   .card h3{
-    font-family:var(--font-display); font-size:21px; font-weight:600; margin:0; line-height:1.2;
+    font-family:var(--font-display); font-size:17px; font-weight:600; margin:0; line-height:1.3;
     text-wrap:balance;
   }
   .ritual-col .card h3{ color:var(--ritual); }
@@ -168,7 +206,7 @@
 
   .draw-btn{
     background:var(--stamp); color:#241802; border:none;
-    font-family:var(--font-display); font-weight:600; font-size:18px;
+    font-family:var(--font-display); font-weight:600; font-size:16px;
     padding:17px 22px; border-radius:20px; cursor:pointer;
     display:flex; align-items:center; justify-content:center; gap:10px;
     box-shadow:0 3px 0 rgba(0,0,0,0.18);
@@ -186,17 +224,18 @@
     color:var(--ink-soft); margin-bottom:14px;
   }
   .link-row{
-    display:flex; align-items:center; gap:14px; margin-bottom:6px;
-    font-family:var(--font-display); font-size:clamp(20px,2.8vw,26px); font-weight:600;
+    display:flex; align-items:center; gap:14px; margin-bottom:6px; flex-wrap:wrap;
+    font-family:var(--font-display); font-size:clamp(16px,2.2vw,20px); font-weight:600;
     text-wrap:balance;
   }
+  .link-row .r, .link-row .p{ display:inline-flex; align-items:center; }
   .link-row .r{ color:var(--ritual); }
   .link-row .p{ color:var(--process); }
   .link-row .arrow{
     flex:none; font-weight:600; color:var(--ink-soft); font-size:18px;
   }
   @media (max-width:900px){
-    .link-row{ flex-direction:column; align-items:flex-start; gap:2px; }
+    .link-row{ flex-direction:column; align-items:flex-start; gap:8px; }
     .link-row .arrow{ transform:rotate(90deg); margin:1px 0; }
   }
 
@@ -276,24 +315,28 @@
 </head>
 <body>
 <div class="page">
-  <header class="masthead">
-    <div class="masthead-title">
+  <header class="hero">
+    <div class="hero-info">
       <span class="eyebrow">🔥 Steal a ritual, fix a meeting.</span>
       <div class="brand-row">
-        <img src="favicon.svg" alt="" width="42" height="42">
+        <img src="favicon.svg" alt="" width="40" height="40">
         <h1>Ritual Exchange</h1>
       </div>
+      <nav class="hero-nav">
+        <a href="#ritualPile">Rituals</a>
+        <a href="#processPile">Processes</a>
+        <a href="#boardSection">Board</a>
+      </nav>
+      <hr class="hero-rule">
       <p>Draw a random ritual and a random work process. Take one thing worth borrowing from the ritual, and sketch how it would actually work in the process.</p>
+      <div class="hero-meta">Combination<span class="count" id="comboCount">000</span></div>
     </div>
-    <div class="masthead-meta">
-      Combination
-      <span class="count" id="comboCount">000</span>
-    </div>
+    <div class="hero-balls" id="heroBalls" aria-hidden="true"></div>
   </header>
 
   <main class="desk">
-    <section class="stack-col ritual-col" aria-label="Ritual pile">
-      <div class="stack-label"><span class="dot" aria-hidden="true"></span> 🕯️ Rituals</div>
+    <section class="stack-col ritual-col" id="ritualPile" aria-label="Ritual pile">
+      <div class="stack-label"><span class="dot" aria-hidden="true"></span> Rituals</div>
       <div class="stack-wrap">
         <div class="deco deco-2" aria-hidden="true"></div>
         <div class="deco deco-1" aria-hidden="true"></div>
@@ -302,7 +345,10 @@
             <span class="badge" id="ritualBadge">No. 1 of 50</span>
             <span class="addedby" id="ritualAddedBy" hidden></span>
           </div>
-          <h3 id="ritualTitle">&nbsp;</h3>
+          <div class="title-row">
+            <span class="avatar" id="ritualAvatar" aria-hidden="true"></span>
+            <h3 id="ritualTitle">&nbsp;</h3>
+          </div>
           <p class="blurb" id="ritualBlurb">&nbsp;</p>
         </article>
       </div>
@@ -329,7 +375,7 @@
       <div class="combo">
         <div class="combo-label">✨ Your combination</div>
         <div class="link-row">
-          <span class="r" id="linkRitual">&nbsp;</span>
+          <span class="r"><span class="avatar avatar-inline" id="linkRitualAvatar" aria-hidden="true"></span><span id="linkRitual">&nbsp;</span></span>
           <span class="arrow" aria-hidden="true">&rarr;</span>
           <span class="p" id="linkProcess">&nbsp;</span>
         </div>
@@ -362,14 +408,14 @@
       </div>
     </section>
 
-    <section class="stack-col process-col" aria-label="Process pile">
-      <div class="stack-label"><span class="dot" aria-hidden="true"></span> 🗂️ Processes</div>
+    <section class="stack-col process-col" id="processPile" aria-label="Process pile">
+      <div class="stack-label"><span class="dot" aria-hidden="true"></span> Processes</div>
       <div class="stack-wrap">
         <div class="deco deco-2" aria-hidden="true"></div>
         <div class="deco deco-1" aria-hidden="true"></div>
         <article class="card" id="processCard">
           <div class="badge-row">
-            <span class="badge" id="processBadge">No. 1 of 50</span>
+            <span class="badge" id="processBadge">No. 1 of 60</span>
             <span class="addedby" id="processAddedBy" hidden></span>
           </div>
           <h3 id="processTitle">&nbsp;</h3>

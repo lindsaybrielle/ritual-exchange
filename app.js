@@ -1,108 +1,110 @@
 (function(){
   "use strict";
 
+  var PALETTE = ["var(--ritual)","var(--process)","var(--stamp)","var(--ball-green)","var(--ball-berry)","var(--ball-sky)","var(--ball-violet)"];
+
   var BUILTIN_RITUALS = [
-    { title:"Nobel Prize Ceremony", blurb:"A committee publicly confers recognition on work chosen through years of quiet deliberation.",
+    { emoji:"🏅", title:"Nobel Prize Ceremony", blurb:"A committee publicly confers recognition on work chosen through years of quiet deliberation.",
       elements:["Naming the specific contribution out loud, not just the outcome","A long private selection process revealed only at the end","A short citation read aloud explaining exactly why it matters"] },
-    { title:"Football Huddle", blurb:"A team collapses into a tight circle for ten seconds before executing under pressure.",
+    { emoji:"🏈", title:"Football Huddle", blurb:"A team collapses into a tight circle for ten seconds before executing under pressure.",
       elements:["Physical closeness that shuts out the noise around you","One person calling it, everyone repeating it back","A countdown that forces the decision to be made now"] },
-    { title:"Wedding Ceremony", blurb:"Two people make public promises in front of witnesses who can hold them to it later.",
+    { emoji:"💍", title:"Wedding Ceremony", blurb:"Two people make public promises in front of witnesses who can hold them to it later.",
       elements:["Saying a commitment out loud in front of others","Witnesses who can be called on later","Exchanging a physical token as proof it happened"] },
-    { title:"Olympic Torch Relay", blurb:"A flame is carried by hand across thousands of people, each holding it for one leg only.",
+    { emoji:"🔥", title:"Olympic Torch Relay", blurb:"A flame is carried by hand across thousands of people, each holding it for one leg only.",
       elements:["Each person visibly responsible for one stretch, no more","A literal handoff moment between carriers","The same flame carried through, never restarted"] },
-    { title:"Japanese Tea Ceremony", blurb:"A host performs a fixed sequence of small deliberate movements while guests watch in shared quiet.",
+    { emoji:"🍵", title:"Japanese Tea Ceremony", blurb:"A host performs a fixed sequence of small deliberate movements while guests watch in shared quiet.",
       elements:["A prescribed order that never gets rushed","Full attention paid to one thing at a time","Silence used on purpose, not left as an accident"] },
-    { title:"Irish Wake", blurb:"Mourners gather to share stories, drink, and sing about someone who's died, turning grief into a shared celebration of their life.",
+    { emoji:"🥃", title:"Irish Wake", blurb:"Mourners gather to share stories, drink, and sing about someone who's died, turning grief into a shared celebration of their life.",
       elements:["A deliberate shift in mood partway through, not one note held","Stories about the person told aloud, not left as private grief","People gathering physically together instead of grieving alone"] },
-    { title:"Graduation Ceremony", blurb:"Names are read aloud one at a time in front of everyone, and a small object moves to mark the change.",
+    { emoji:"🎓", title:"Graduation Ceremony", blurb:"Names are read aloud one at a time in front of everyone, and a small object moves to mark the change.",
       elements:["Individual names read aloud, not a group thank-you","A visible object that moves to show status has changed","A line everyone crosses, in turn, the same direction"] },
-    { title:"Changing of the Guard", blurb:"One shift formally hands responsibility to the next through a scripted, witnessed routine.",
+    { emoji:"💂", title:"Changing of the Guard", blurb:"One shift formally hands responsibility to the next through a scripted, witnessed routine.",
       elements:["A scripted exchange, not an improvised one","An audience present specifically to witness the handoff","One precise moment when 'who's responsible' flips"] },
-    { title:"The Toast", blurb:"Someone raises a glass, says something specific, and everyone drinks at the same second.",
+    { emoji:"🥂", title:"The Toast", blurb:"Someone raises a glass, says something specific, and everyone drinks at the same second.",
       elements:["One voice naming exactly what's being honored","A synchronized action everyone does together, on cue","Brevity — it works because it doesn't go long"] },
-    { title:"Harvest Festival", blurb:"A community marks the end of collective effort by sharing what was produced.",
+    { emoji:"🌾", title:"Harvest Festival", blurb:"A community marks the end of collective effort by sharing what was produced.",
       elements:["The people who did the work are the ones who benefit, visibly","Shared reward, not individual bonuses handed out quietly","A clear line drawn between 'the work' and 'now we rest'"] },
-    { title:"Naming Ceremony", blurb:"A person or thing is given a name in public, and from that point on, that is what it's called.",
+    { emoji:"👶", title:"Naming Ceremony", blurb:"A person or thing is given a name in public, and from that point on, that is what it's called.",
       elements:["A declaration that makes something official the moment it's spoken","Choosing language on purpose, instead of a default placeholder","People invited specifically to witness an identity being set"] },
-    { title:"Moment of Silence", blurb:"Everyone stops at the same time, for exactly one purpose, then resumes.",
+    { emoji:"🕊️", title:"Moment of Silence", blurb:"Everyone stops at the same time, for exactly one purpose, then resumes.",
       elements:["A hard stop with a clear start and a clear end","No talking allowed, on purpose","Full participation — nobody quietly exempts themselves"] },
-    { title:"Barn Raising", blurb:"A whole community builds one structure in a single day because everyone shows up at once.",
+    { emoji:"🧱", title:"Barn Raising", blurb:"A whole community builds one structure in a single day because everyone shows up at once.",
       elements:["Many hands on one visible outcome, same day","No single owner — it belongs to whoever needed it","Progress everyone can physically see accumulate"] },
-    { title:"Coin Toss", blurb:"A decision no one can argue with, made by a method everyone agreed to trust in advance.",
+    { emoji:"🪙", title:"Coin Toss", blurb:"A decision no one can argue with, made by a method everyone agreed to trust in advance.",
       elements:["Fairness agreed on before anyone knows the outcome","A method both sides accept even when they lose","A fast, final way to break a stalemate"] },
-    { title:"Campfire Storytelling", blurb:"People sit in a circle and take turns adding to a story out loud.",
+    { emoji:"🏕️", title:"Campfire Storytelling", blurb:"People sit in a circle and take turns adding to a story out loud.",
       elements:["A circle with no head of the table","Turn-taking instead of a single presenter","A story refined a little more each time it's retold"] },
-    { title:"Passover Seder", blurb:"A structured meal that retells a story in the same order every year, with fixed questions asked by whoever is youngest.",
+    { emoji:"🍷", title:"Passover Seder", blurb:"A structured meal that retells a story in the same order every year, with fixed questions asked by whoever is youngest.",
       elements:["A story retold in a fixed order every time","The newest or most junior person asks the first question","Everyone at the table participates, not just the host"] },
-    { title:"State of the Union Address", blurb:"A leader reports to the whole body in one sitting, and questions come later, not during.",
+    { emoji:"📢", title:"State of the Union Address", blurb:"A leader reports to the whole body in one sitting, and questions come later, not during.",
       elements:["One person reporting to everyone at once, not team by team","Questions held until after the full account is given","A fixed, expected moment everyone can plan around"] },
-    { title:"Trial by Jury", blurb:"A group of peers deliberates privately, then delivers a single verdict together.",
+    { emoji:"⚖️", title:"Trial by Jury", blurb:"A group of peers deliberates privately, then delivers a single verdict together.",
       elements:["Deliberation kept private until the decision is final","A group forced to reach one shared answer, not many opinions","Peers judging peers, not a single authority deciding alone"] },
-    { title:"Birthday Party", blurb:"Candles are lit on a cake, everyone sings the same song together, and a wish is made in silence before blowing them out.",
+    { emoji:"🎂", title:"Birthday Party", blurb:"Candles are lit on a cake, everyone sings the same song together, and a wish is made in silence before blowing them out.",
       elements:["A song everyone already knows the words to, sung together","A private wish kept silent while everyone else watches","A clear moment (the candles going out) that marks the celebration's peak"] },
-    { title:"Diwali (Festival of Lights)", blurb:"Many small individual flames are lit separately, and together they make one shared light.",
+    { emoji:"🪔", title:"Diwali (Festival of Lights)", blurb:"Many small individual flames are lit separately, and together they make one shared light.",
       elements:["Everyone contributes their own small piece to one shared result","Individual effort made visible, not anonymous","Light added gradually until the whole thing changes"] },
-    { title:"Remembrance Sunday", blurb:"Two minutes' silence at a fixed hour, observed simultaneously in many separate places at once.",
+    { emoji:"🌺", title:"Remembrance Sunday", blurb:"Two minutes' silence at a fixed hour, observed simultaneously in many separate places at once.",
       elements:["A precise, pre-announced start and end time","Simultaneous observance across separate locations","Stillness as the entire content of the act"] },
-    { title:"Trooping the Colour", blurb:"A precision procession rehearsed for months before the single public performance.",
+    { emoji:"🎺", title:"Trooping the Colour", blurb:"A precision procession rehearsed for months before the single public performance.",
       elements:["Extensive rehearsal invisible to the audience that sees only the result","Precision as the entire point, not a side effect","One performance date fixed long in advance"] },
-    { title:"First Day of School", blurb:"A specific day, often marked with a photo, when someone new formally begins somewhere they'll spend a long time.",
+    { emoji:"🎒", title:"First Day of School", blurb:"A specific day, often marked with a photo, when someone new formally begins somewhere they'll spend a long time.",
       elements:["A visible marker (a photo, a new uniform) that this is the start of something","Nerves treated as normal and expected, not hidden","Everyone else already there, ready to fold the newcomer in"] },
-    { title:"Standing Ovation", blurb:"An audience rises together, uninstructed, when something has clearly earned it.",
+    { emoji:"👏", title:"Standing Ovation", blurb:"An audience rises together, uninstructed, when something has clearly earned it.",
       elements:["Recognition that isn't scheduled — it happens when it's earned","No one has to organize it; everyone just knows","A physical, visible signal, not just a private opinion"] },
-    { title:"Knighting Ceremony", blurb:"A single physical gesture, performed once, converts someone's status in front of witnesses.",
+    { emoji:"⚔️", title:"Knighting Ceremony", blurb:"A single physical gesture, performed once, converts someone's status in front of witnesses.",
       elements:["One deliberate physical action marks the change, not a memo","Witnesses present specifically to see status change hands","A moment brief enough to remember exactly"] },
-    { title:"Choir Warm-up", blurb:"A group hums scales together before singing, syncing breath and pitch before anything else.",
+    { emoji:"🎤", title:"Choir Warm-up", blurb:"A group hums scales together before singing, syncing breath and pitch before anything else.",
       elements:["Getting aligned before the real performance starts, not during it","A shared, low-stakes activity that syncs the group's rhythm","Done the same way every time, so it becomes automatic"] },
-    { title:"Court Oath-Taking", blurb:"A witness places a hand on a text and speaks a fixed formula before testifying.",
+    { emoji:"📜", title:"Court Oath-Taking", blurb:"A witness places a hand on a text and speaks a fixed formula before testifying.",
       elements:["A fixed form of words spoken before the real work begins","A physical gesture that signals 'what follows is binding'","The same ritual regardless of who's taking it or what they'll say"] },
-    { title:"Ribbon-Cutting Ceremony", blurb:"A dignitary cuts a ribbon with oversized scissors to formally mark something new opening to the public.",
+    { emoji:"✂️", title:"Ribbon-Cutting Ceremony", blurb:"A dignitary cuts a ribbon with oversized scissors to formally mark something new opening to the public.",
       elements:["A simple, visible action that makes an opening official","A specific person chosen to do the honours, marking the occasion","An audience gathered specifically to witness the moment something starts"] },
-    { title:"Passing the Baton", blurb:"In a relay race, one runner physically hands a baton to the next without either of them stopping.",
+    { emoji:"🏃", title:"Passing the Baton", blurb:"In a relay race, one runner physically hands a baton to the next without either of them stopping.",
       elements:["A physical object that makes the handoff undeniable, not just implied","A brief overlap where both people are responsible at once","Momentum carried through the handoff instead of restarting from zero"] },
-    { title:"Secret Santa", blurb:"Colleagues anonymously give small gifts to each other, drawn by lot, over the same short window every year.",
+    { emoji:"🎁", title:"Secret Santa", blurb:"Colleagues anonymously give small gifts to each other, drawn by lot, over the same short window every year.",
       elements:["Anonymity that lets people be more generous than they'd be publicly","A fixed, shared timeframe everyone opts into together","Small gestures that matter more for the thought than the value"] },
-    { title:"Passing the Talking Stick", blurb:"Only the person holding an object may speak; everyone else listens.",
+    { emoji:"🪵", title:"Passing the Talking Stick", blurb:"Only the person holding an object may speak; everyone else listens.",
       elements:["One voice at a time, enforced by a physical object","Listening as the default state, speaking as the exception","Equal access to the object regardless of rank"] },
-    { title:"Marathon Start Gun", blurb:"Hundreds of separate efforts all begin at the exact same fired signal.",
+    { emoji:"🏁", title:"Marathon Start Gun", blurb:"Hundreds of separate efforts all begin at the exact same fired signal.",
       elements:["One shared starting instant for everyone, regardless of pace after","A single unambiguous signal, impossible to miss or misread","Individual effort that still happens inside a shared moment"] },
-    { title:"Handshake to Seal a Deal", blurb:"Two people shake hands to confirm an agreement is final, without needing paperwork in that moment.",
+    { emoji:"🤝", title:"Handshake to Seal a Deal", blurb:"Two people shake hands to confirm an agreement is final, without needing paperwork in that moment.",
       elements:["A simple physical act that both sides recognize as binding","No ambiguity afterwards about whether an agreement was reached","Trust demonstrated in public, not just assumed in private"] },
-    { title:"New Year's Countdown", blurb:"A shared countdown ends in one synchronized moment everyone marks together.",
+    { emoji:"🎆", title:"New Year's Countdown", blurb:"A shared countdown ends in one synchronized moment everyone marks together.",
       elements:["A visible countdown that builds anticipation before the moment arrives","Everyone marking the exact same instant, together","A clean, symbolic break between 'before' and 'after'"] },
-    { title:"Coming-of-Age Rite", blurb:"A community publicly marks the exact point someone crosses into a new status.",
+    { emoji:"🌱", title:"Coming-of-Age Rite", blurb:"A community publicly marks the exact point someone crosses into a new status.",
       elements:["A specific, nameable moment of change, not a gradual drift","Community presence required — it doesn't count done alone","A recognizable 'before' and 'after' either side of the moment"] },
-    { title:"Election Day", blurb:"Everyone eligible casts a private vote on the same day, and the count decides the outcome for everyone.",
+    { emoji:"🗳️", title:"Election Day", blurb:"Everyone eligible casts a private vote on the same day, and the count decides the outcome for everyone.",
       elements:["A private choice that still becomes a public, binding result","The same fixed day for everyone, so no one's vote counts more by timing","A count that visibly settles the question, once and for all"] },
-    { title:"Job Interview", blurb:"A structured conversation with fixed questions, on a set day, that decides whether someone joins.",
+    { emoji:"💼", title:"Job Interview", blurb:"A structured conversation with fixed questions, on a set day, that decides whether someone joins.",
       elements:["The same core questions asked of everyone, for fairness","A clear before-and-after: you didn't have the job, then you might","A panel or person specifically tasked with deciding, not group consensus"] },
-    { title:"Pilgrimage", blurb:"Travelling a fixed route to a shared destination, often alongside strangers doing the same.",
+    { emoji:"🧭", title:"Pilgrimage", blurb:"Travelling a fixed route to a shared destination, often alongside strangers doing the same.",
       elements:["A defined path, not a free-for-all route to the same goal","A shared destination that strangers arrive at together","The journey itself treated as part of the point, not just the arrival"] },
-    { title:"Housewarming Party", blurb:"Once someone's moved into a new home, they invite people over specifically to mark the place as lived-in.",
+    { emoji:"🏠", title:"Housewarming Party", blurb:"Once someone's moved into a new home, they invite people over specifically to mark the place as lived-in.",
       elements:["A deliberate gathering that turns a house into a home, on purpose","Guests bringing something small to mark the occasion","A first real use of the new space, with people in it, not just the movers"] },
-    { title:"Confession", blurb:"A private, structured conversation where someone says something they haven't been able to say elsewhere.",
+    { emoji:"🙏", title:"Confession", blurb:"A private, structured conversation where someone says something they haven't been able to say elsewhere.",
       elements:["A space explicitly protected so people will actually say the true thing","Structure and confidentiality that exists before anyone needs it","A fixed, known process, not an improvised private chat"] },
-    { title:"Inauguration", blurb:"An oath is sworn publicly at a fixed moment, and authority formally changes hands right there.",
+    { emoji:"🏛️", title:"Inauguration", blurb:"An oath is sworn publicly at a fixed moment, and authority formally changes hands right there.",
       elements:["A precise, scheduled instant when authority formally transfers","A public oath, not a private agreement","Continuity made visible — the old holder is present for the change"] },
-    { title:"School Assembly", blurb:"The whole group gathers briefly each morning before splitting off into smaller groups for the day.",
+    { emoji:"🏫", title:"School Assembly", blurb:"The whole group gathers briefly each morning before splitting off into smaller groups for the day.",
       elements:["Everyone together briefly before the day fragments into separate work","The same time and place every day, so it needs no announcement","Shared information given once instead of repeated many times"] },
-    { title:"Retirement Send-off", blurb:"Colleagues gather once to publicly mark someone's exit and what they actually contributed.",
+    { emoji:"👋", title:"Retirement Send-off", blurb:"Colleagues gather once to publicly mark someone's exit and what they actually contributed.",
       elements:["Naming specific contributions, not a generic thank-you","A single gathering that draws a clear line under someone's time","Marking an ending on purpose, instead of letting it go unnoticed"] },
-    { title:"Olympic Medal Ceremony", blurb:"Winners stand on a podium as their national anthem plays and a medal is placed around their neck.",
+    { emoji:"🥇", title:"Olympic Medal Ceremony", blurb:"Winners stand on a podium as their national anthem plays and a medal is placed around their neck.",
       elements:["Recognition delivered in a fixed, repeatable sequence every time","A physical object that makes the achievement permanent","A moment built for everyone watching, not just the person being honoured"] },
-    { title:"Auction Gavel Fall", blurb:"A single strike of a small hammer makes a decision final and unchangeable.",
+    { emoji:"🔨", title:"Auction Gavel Fall", blurb:"A single strike of a small hammer makes a decision final and unchangeable.",
       elements:["A clear, audible signal that a decision is now final","No renegotiation after the signal — that's the entire point","Everyone in the room hears the same moment at the same time"] },
-    { title:"War Room Briefing", blurb:"A small group receives the same facts, at the same time, before dispersing to act separately.",
+    { emoji:"🗺️", title:"War Room Briefing", blurb:"A small group receives the same facts, at the same time, before dispersing to act separately.",
       elements:["Everyone briefed from the same source at the same moment, no relay","A hard split between briefing and acting, not done at once","Dispersing immediately afterwards to act on what was just shared"] },
-    { title:"Televised Political Debate", blurb:"Candidates argue opposing positions live, in front of an audience, before anyone casts a vote.",
+    { emoji:"🎙️", title:"Televised Political Debate", blurb:"Candidates argue opposing positions live, in front of an audience, before anyone casts a vote.",
       elements:["Arguing a position clearly enough that undecided people can judge it","A vote that only happens after both sides have been heard","A structure that guarantees the counter-argument gets airtime"] },
-    { title:"Lowering the Flag at Dusk", blurb:"A flag is lowered at the same fixed time each day and folded in a set pattern.",
+    { emoji:"🌇", title:"Lowering the Flag at Dusk", blurb:"A flag is lowered at the same fixed time each day and folded in a set pattern.",
       elements:["The same fixed time every day, needing no reminder","A precise, practiced sequence, not a quick yank","A visible marker that the day's public business has closed"] },
-    { title:"Scout Promise Ceremony", blurb:"New members recite a fixed pledge out loud, in front of those already inside the group.",
+    { emoji:"🖐️", title:"Scout Promise Ceremony", blurb:"New members recite a fixed pledge out loud, in front of those already inside the group.",
       elements:["Words spoken aloud, not just privately agreed to","Existing members present specifically to witness the commitment","The same fixed wording for every new person, not personalized"] },
-    { title:"Spring Cleaning", blurb:"Once a year, people deliberately go back over everything in the house, not just what's obviously dirty.",
+    { emoji:"🧹", title:"Spring Cleaning", blurb:"Once a year, people deliberately go back over everything in the house, not just what's obviously dirty.",
       elements:["A deliberate second pass, not just 'good enough the first time'","A fixed, expected time of year, so it doesn't get put off indefinitely","Treating small, easy-to-ignore things as still worth dealing with"] }
-  ].map(function(r, i){ r.id = "r" + i; return r; });
+  ].map(function(r, i){ r.id = "r" + i; r.color = PALETTE[i % PALETTE.length]; return r; });
 
   var BUILTIN_PROCESSES = [
     { title:"Daily Stand-up", blurb:"The short sync before the team splits up to build for the day." },
@@ -177,14 +179,43 @@
   var db = null;
 
   var el = {};
-  ["comboCount","ritualBadge","ritualTitle","ritualBlurb","ritualAddedBy",
+  ["comboCount","ritualBadge","ritualTitle","ritualBlurb","ritualAddedBy","ritualAvatar",
    "processBadge","processTitle","processBlurb","processAddedBy",
-   "linkRitual","linkProcess","borrowList","noteInput","nameInput",
+   "linkRitual","linkRitualAvatar","linkProcess","borrowList","noteInput","nameInput",
    "submitBtn","copyBtn","statusLine","boardSection","boardList","boardCount",
    "drawBtn","redrawRitual","redrawProcess",
    "toggleAddRitual","addRitualForm","newRitualTitle","newRitualBlurb","newRitualTip","saveRitualBtn","cancelRitualBtn","ritualFormStatus",
-   "toggleAddProcess","addProcessForm","newProcessTitle","newProcessBlurb","saveProcessBtn","cancelProcessBtn","processFormStatus"
+   "toggleAddProcess","addProcessForm","newProcessTitle","newProcessBlurb","saveProcessBtn","cancelProcessBtn","processFormStatus",
+   "heroBalls"
   ].forEach(function(id){ el[id] = document.getElementById(id); });
+
+  function renderHeroBalls(){
+    if(!el.heroBalls) return;
+    el.heroBalls.innerHTML = "";
+    var pool = BUILTIN_RITUALS.slice();
+    for(var i = pool.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp;
+    }
+    var count = window.innerWidth < 700 ? 11 : 22;
+    pool.slice(0, count).forEach(function(ritual){
+      var big = Math.random() < 0.22;
+      var size = big ? (86 + Math.random() * 40) : (36 + Math.random() * 42);
+      var ball = document.createElement('div');
+      ball.className = 'ball';
+      ball.title = ritual.title;
+      ball.style.width = size + 'px';
+      ball.style.height = size + 'px';
+      ball.style.left = (2 + Math.random() * 90) + '%';
+      ball.style.top = (4 + Math.random() * 78) + '%';
+      ball.style.background = ritual.color;
+      ball.style.fontSize = Math.max(14, size * 0.42) + 'px';
+      ball.style.animationDuration = (4 + Math.random() * 3.5) + 's';
+      ball.style.animationDelay = '-' + (Math.random() * 5) + 's';
+      ball.textContent = ritual.emoji || '✨';
+      el.heroBalls.appendChild(ball);
+    });
+  }
 
   function allRituals(){ return BUILTIN_RITUALS.concat(customRituals); }
   function allProcesses(){ return BUILTIN_PROCESSES.concat(customProcesses); }
@@ -246,6 +277,10 @@
     el.ritualBadge.textContent = "No. " + rPos + " of " + rList.length;
     el.ritualTitle.textContent = ritual.title;
     el.ritualBlurb.textContent = ritual.blurb;
+    el.ritualAvatar.textContent = ritual.emoji || "✨";
+    el.ritualAvatar.style.background = ritual.color || "var(--line-strong)";
+    el.linkRitualAvatar.textContent = ritual.emoji || "✨";
+    el.linkRitualAvatar.style.background = ritual.color || "var(--line-strong)";
     if(ritual.addedBy){ el.ritualAddedBy.hidden = false; el.ritualAddedBy.textContent = "added by " + ritual.addedBy; }
     else { el.ritualAddedBy.hidden = true; }
 
@@ -513,6 +548,7 @@
       state.ritualId = r0.id; state.processId = p0.id; state.counter = 1;
     }
     renderCard();
+    renderHeroBalls();
     persist();
     el.submitBtn.disabled = true;
     connectFirebase();
