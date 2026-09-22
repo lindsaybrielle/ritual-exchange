@@ -81,23 +81,9 @@
     font-family:var(--font-display); font-weight:700; font-size:clamp(24px,3.6vw,36px);
     margin:0; text-wrap:balance; line-height:1.05; letter-spacing:-.01em;
   }
-  .hero-nav{ display:flex; gap:20px; flex-wrap:wrap; margin-bottom:18px; }
-  .hero-nav a{
-    font-family:var(--font-display); font-weight:600; font-size:11.5px; letter-spacing:.06em; text-transform:uppercase;
-    color:var(--ink); text-decoration:none; border-bottom:2px solid transparent; padding-bottom:2px;
-  }
-  .hero-nav a:hover{ border-bottom-color:var(--stamp); }
   .hero-rule{ border:none; border-top:2px dotted var(--line-strong); margin:0 0 22px; }
   .hero-info p{
     margin:0; max-width:48ch; color:var(--ink-soft); font-size:15.5px; line-height:1.65;
-  }
-  .hero-meta{
-    margin-top:24px; font-family:var(--font-body); font-weight:800; font-size:11.5px; letter-spacing:.08em;
-    text-transform:uppercase; color:var(--ink-soft);
-  }
-  .hero-meta .count{
-    display:block; font-family:var(--font-display); font-weight:700; font-size:26px; letter-spacing:0;
-    text-transform:none; color:var(--ink); margin-top:2px;
   }
 
   .hero-balls{
@@ -106,11 +92,15 @@
   }
   @media (max-width:900px){ .hero-balls{ min-height:220px; } }
   .ball{
-    position:absolute; border-radius:50%;
+    position:absolute; border-radius:50%; border:none; padding:0; margin:0;
     display:flex; align-items:center; justify-content:center;
     box-shadow:0 8px 18px rgba(0,0,0,.16);
     animation-name:ball-float; animation-timing-function:ease-in-out; animation-iteration-count:infinite;
-    line-height:1;
+    line-height:1; cursor:pointer;
+  }
+  .ball:hover, .ball:focus-visible{
+    filter:brightness(1.08);
+    box-shadow:0 10px 22px rgba(0,0,0,.24);
   }
   @keyframes ball-float{
     0%, 100%{ transform:translateY(0) rotate(0deg); }
@@ -309,7 +299,6 @@
     color:var(--ink-soft); max-width:62ch;
   }
   footer.note p{ font-size:12.5px; line-height:1.65; margin:0 0 8px; }
-  footer.note .source{ font-size:12px; }
   footer.note a{ color:inherit; }
 </style>
 </head>
@@ -322,20 +311,14 @@
         <img src="favicon.svg" alt="" width="40" height="40">
         <h1>Ritual Exchange</h1>
       </div>
-      <nav class="hero-nav">
-        <a href="#ritualPile">Rituals</a>
-        <a href="#processPile">Processes</a>
-        <a href="#boardSection">Board</a>
-      </nav>
       <hr class="hero-rule">
       <p>Draw a random ritual and a random work process. Take one thing worth borrowing from the ritual, and sketch how it would actually work in the process.</p>
-      <div class="hero-meta">Combination<span class="count" id="comboCount">000</span></div>
     </div>
-    <div class="hero-balls" id="heroBalls" aria-hidden="true"></div>
+    <div class="hero-balls" id="heroBalls" aria-label="Ritual bubbles — click one to try that ritual"></div>
   </header>
 
   <main class="desk">
-    <section class="stack-col ritual-col" id="ritualPile" aria-label="Ritual pile">
+    <section class="stack-col ritual-col" aria-label="Ritual pile">
       <div class="stack-label"><span class="dot" aria-hidden="true"></span> Rituals</div>
       <div class="stack-wrap">
         <div class="deco deco-2" aria-hidden="true"></div>
@@ -408,7 +391,7 @@
       </div>
     </section>
 
-    <section class="stack-col process-col" id="processPile" aria-label="Process pile">
+    <section class="stack-col process-col" aria-label="Process pile">
       <div class="stack-label"><span class="dot" aria-hidden="true"></span> Processes</div>
       <div class="stack-wrap">
         <div class="deco deco-2" aria-hidden="true"></div>
@@ -441,7 +424,6 @@
 
   <footer class="note">
     <p>No account needed. Answers and new entries join the shared board for everyone. If it's ever unreachable, use &ldquo;Copy my answer&rdquo; instead &mdash; nothing's lost, it just stays on your device until it's back.</p>
-    <p class="source">🔧 <a href="https://github.com/lindsaybrielle/ritual-exchange" target="_blank" rel="noopener">View the source</a></p>
   </footer>
 </div>
 

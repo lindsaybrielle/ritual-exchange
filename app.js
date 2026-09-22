@@ -179,7 +179,7 @@
   var db = null;
 
   var el = {};
-  ["comboCount","ritualBadge","ritualTitle","ritualBlurb","ritualAddedBy","ritualAvatar",
+  ["ritualBadge","ritualTitle","ritualBlurb","ritualAddedBy","ritualAvatar",
    "processBadge","processTitle","processBlurb","processAddedBy",
    "linkRitual","linkRitualAvatar","linkProcess","borrowList","noteInput","nameInput",
    "submitBtn","copyBtn","statusLine","boardSection","boardList","boardCount",
@@ -201,9 +201,11 @@
     pool.slice(0, count).forEach(function(ritual){
       var big = Math.random() < 0.22;
       var size = big ? (86 + Math.random() * 40) : (36 + Math.random() * 42);
-      var ball = document.createElement('div');
+      var ball = document.createElement('button');
+      ball.type = 'button';
       ball.className = 'ball';
-      ball.title = ritual.title;
+      ball.title = 'Try this ritual: ' + ritual.title;
+      ball.setAttribute('aria-label', 'Try this ritual: ' + ritual.title);
       ball.style.width = size + 'px';
       ball.style.height = size + 'px';
       ball.style.left = (2 + Math.random() * 90) + '%';
@@ -213,6 +215,12 @@
       ball.style.animationDuration = (4 + Math.random() * 3.5) + 's';
       ball.style.animationDelay = '-' + (Math.random() * 5) + 's';
       ball.textContent = ritual.emoji || '✨';
+      ball.addEventListener('click', function(){
+        state.ritualId = ritual.id;
+        state.counter += 1;
+        renderCard();
+        persist();
+      });
       el.heroBalls.appendChild(ball);
     });
   }
@@ -270,8 +278,6 @@
     var ritual = findRitual(state.ritualId);
     var process = findProcess(state.processId);
     if(!ritual || !process) return;
-
-    el.comboCount.textContent = state.counter < 10 ? "00" + state.counter : (state.counter < 100 ? "0" + state.counter : "" + state.counter);
 
     var rList = allRituals(); var rPos = rList.indexOf(ritual) + 1;
     el.ritualBadge.textContent = "No. " + rPos + " of " + rList.length;
